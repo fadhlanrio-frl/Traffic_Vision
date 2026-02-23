@@ -1,0 +1,20 @@
+__pycache__/
+*.pyc
+*.pyo
+.env
+.venv
+venv/
+*.egg-info/
+dist/
+build/
+.DS_Store
+
+# Model weights (optional - uncomment if model is large)
+# models/*.pt
+# models/*.onnx
+
+# Streamlit cache
+.streamlit/secrets.toml
+
+# Poetry
+poetry.lock

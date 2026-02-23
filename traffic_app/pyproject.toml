@@ -1,0 +1,38 @@
+[tool.poetry]
+name = "traffic-analyzer"
+version = "1.0.0"
+description = "Vehicle Detection & Traffic Analysis App powered by YOLOv12n"
+authors = ["Your Name <your@email.com>"]
+readme = "README.md"
+packages = []
+package-mode = false
+
+[tool.poetry.dependencies]
+python = ">=3.10,<3.13"
+streamlit = "^1.40.0"
+ultralytics = "^8.3.0"
+opencv-python-headless = "^4.10.0"
+Pillow = "^10.4.0"
+numpy = "^1.26.0"
+pandas = "^2.2.0"
+matplotlib = "^3.9.0"
+plotly = "^5.24.0"
+torch = "^2.2"
+torchvision = "^0.17"
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.0.0"
+isort = "^5.13.0"
+
+[[tool.poetry.source]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+priority = "explicit"
+
+[[tool.poetry.source]]
+name = "PyPI"
+priority = "primary"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
