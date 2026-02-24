@@ -123,7 +123,7 @@ def render(model_path: str):
             """,
             unsafe_allow_html=True,
         )
-        st.warning("Letakkan file `best.pt` ke folder `models/` atau ubah path di sidebar.")
+        st.warning("Letakkan file `best.onnx` ke folder `models/` atau ubah path di sidebar.")
 
     st.divider()
 
