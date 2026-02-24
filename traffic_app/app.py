@@ -3,6 +3,7 @@
 Main Streamlit entry point.
 """
 
+import os
 import streamlit as st
 
 st.set_page_config(
@@ -160,6 +161,9 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
+# ── Resolve base dir (lokasi app.py ini berada) ───────────────────────────────
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
 # ── Sidebar ───────────────────────────────────────────────────────────────────
 with st.sidebar:
     st.markdown(
@@ -178,8 +182,9 @@ with st.sidebar:
     st.divider()
 
     st.markdown("#### 🗂 Navigasi")
+    # ✅ Fix: label tidak boleh kosong, gunakan label_visibility="collapsed"
     page = st.radio(
-        "",
+        "Navigasi Halaman",
         ["🏠 Dashboard", "🖼 Deteksi Gambar", "📹 Analisis Video", "📊 Tentang Model"],
         label_visibility="collapsed",
     )
@@ -187,14 +192,14 @@ with st.sidebar:
     st.divider()
 
     st.markdown("#### ⚙️ Konfigurasi Model")
-    model_path = st.text_input(
+    model_path_input = st.text_input(
         "Path Model (.onnx)",
         value="models/best.onnx",
         help="Path relatif ke file best.onnx hasil training",
     )
 
     conf_thresh = st.slider("Confidence Threshold", 0.1, 0.9, 0.4, 0.05)
-    iou_thresh = st.slider("IoU Threshold", 0.1, 0.9, 0.5, 0.05)
+    iou_thresh  = st.slider("IoU Threshold", 0.1, 0.9, 0.5, 0.05)
 
     st.divider()
     st.markdown(
@@ -202,6 +207,13 @@ with st.sidebar:
         "YOLOv12n · Bus · Car · Van</p>",
         unsafe_allow_html=True,
     )
+
+# ── Resolve model path ke absolute ───────────────────────────────────────────
+# Coba absolute path dulu, kalau tidak ada coba relatif dari BASE_DIR
+if os.path.isabs(model_path_input):
+    model_path = model_path_input
+else:
+    model_path = os.path.join(BASE_DIR, model_path_input)
 
 # ── Model loader (cached) ─────────────────────────────────────────────────────
 @st.cache_resource(show_spinner="Memuat model YOLOv12n...")
@@ -211,13 +223,19 @@ def get_model(path: str):
 
 
 def try_load_model():
-    import os
     if not os.path.exists(model_path):
         st.error(
-            f"❌ Model tidak ditemukan di **{model_path}**\n\n"
-            "Letakkan file `best.onnx` hasil training ke folder `models/` "
-            "atau ubah path di sidebar."
+            f"❌ Model tidak ditemukan di:\n`{model_path}`\n\n"
+            "Pastikan file `best.onnx` sudah ada di folder `models/` dalam repo GitHub."
         )
+        # Debug info
+        with st.expander("🔍 Debug Info"):
+            st.code(f"BASE_DIR  : {BASE_DIR}\nmodel_path: {model_path}")
+            models_dir = os.path.join(BASE_DIR, "models")
+            if os.path.isdir(models_dir):
+                st.code("Isi folder models/:\n" + "\n".join(os.listdir(models_dir)))
+            else:
+                st.code("Folder models/ tidak ditemukan!")
         return None
     return get_model(model_path)
 
