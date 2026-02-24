@@ -16,5 +16,4 @@ build/
 # Streamlit cache
 .streamlit/secrets.toml
 
-# Poetry
-poetry.lock
+
