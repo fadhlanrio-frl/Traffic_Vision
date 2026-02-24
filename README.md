@@ -42,6 +42,8 @@ Sudut     : bird-eye view (dari atas) atau eye-level (dari samping)
 Pencahayaan: siang hari dengan cahaya cukup
 Kendaraan : terlihat jelas, tidak terlalu kecil atau blur
 ```
+Buka File Foto Demo: 
+![Image](https://github.com/user-attachments/assets/2c9cfb9e-378b-48d3-8a5b-afc5245c7f82)
 
 ### ⚠️ Gambar yang kurang cocok
 
